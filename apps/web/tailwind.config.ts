@@ -2,8 +2,9 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-	// Adicione esta linha:
-	darkMode: "class",
+	// MUDANÇA CRÍTICA: Usamos um array para forçar a estratégia de classe.
+	// Isso resolve a incompatibilidade que faz o Tailwind ignorar a configuração.
+	darkMode: ["class", '[data-theme="dark"]'],
 
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -11,8 +12,8 @@ const config: Config = {
 		"./src/app/**/*.{js,ts,jsx,tsx,mdx}",
 	],
 	theme: {
-		// ...
+		extend: {},
 	},
-	plugins: [],
+	plugins: [require("@tailwindcss/typography")],
 };
 export default config;

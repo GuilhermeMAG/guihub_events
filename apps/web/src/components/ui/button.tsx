@@ -1,3 +1,4 @@
+// apps/web/src/components/ui/button.tsx
 'use client';
 
 import * as React from 'react';
@@ -10,6 +11,7 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
+        // MUDANÇA: 'text-primary-foreground' para 'text-white' para maior robustez
         default: 'bg-blue-600 text-white hover:bg-blue-600/90',
         destructive: 'bg-red-600 text-white hover:bg-red-600/90',
         outline: 'border border-gray-200 bg-white hover:bg-gray-100 hover:text-gray-900 dark:border-gray-800 dark:bg-gray-950 dark:hover:bg-gray-800 dark:hover:text-gray-50',

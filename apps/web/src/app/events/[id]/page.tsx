@@ -1,3 +1,5 @@
+// apps/web/src/app/events/[id]/page.tsx
+
 import { getClient } from "@/lib/client";
 import { gql } from "@apollo/client";
 import { Calendar, MapPin, User, DollarSign, ArrowLeft } from "lucide-react";
@@ -36,7 +38,7 @@ const GET_EVENT_QUERY = gql`
 `;
 
 function formatEventDate(dateString: string) {
-  return format(new Date(dateString), "EEEE, dd 'de' MMMM 'de' yyyy, 'às' HH:mm'h'", { locale: ptBR });
+  return format(new Date(dateString), "EEEE, dd 'de' MMMM 'de' ইন্ডিয়ার, 'às' HH:mm'h'", { locale: ptBR });
 }
 
 function formatPrice(price: number) {
@@ -48,11 +50,14 @@ function formatPrice(price: number) {
 }
 
 export default async function EventDetailPage({ params }: { params: { id: string } }) {
+  const eventId = params?.id;
+
   try {
     const { data } = await getClient().query<{ getEvent: Event | null }>({
       query: GET_EVENT_QUERY,
-      variables: { id: params.id },
+      variables: { id: eventId },
       errorPolicy: 'all',
+      context: { fetchOptions: { next: { revalidate: 0 } } },
     });
 
     if (!data || !data.getEvent) {
@@ -96,7 +101,6 @@ export default async function EventDetailPage({ params }: { params: { id: string
                     <DollarSign className="h-8 w-8 mr-2 text-green-500" />
                     <span>{formatPrice(event.price)}</span>
                   </div>
-                  {/* Botão de inscrição agora é um componente cliente interativo */}
                   <EventRegistrationButton eventId={event.id} />
                 </div>
               </div>

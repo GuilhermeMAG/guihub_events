@@ -1,3 +1,4 @@
+// apps/web/src/components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
@@ -6,18 +7,20 @@ import { Button } from './ui/button';
 import { ThemeSwitcher } from './theme-switcher';
 
 export default function Navbar() {
+  // A Navbar agora apenas consome o contexto, sem estados ou efeitos próprios.
   const { isAuthenticated, logout, isLoading } = useAuth();
 
   return (
-    <header className="bg-white/80 dark:bg-gray-950/80 shadow-sm sticky top-0 z-50 backdrop-blur-lg">
+    <header className="bg-white/80 dark:bg-gray-950/80 shadow-sm sticky top-0 z-50 backdrop-blur-lg transition-colors duration-200">
       <nav className="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-gray-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
           EventPlatform
         </Link>
         <div className="flex items-center space-x-2">
           <ThemeSwitcher />
+          {/* Usamos um placeholder para evitar "layout shift" enquanto a autenticação carrega */}
           {isLoading ? (
-            <div className="w-24 h-10 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse"></div>
+            <div className="w-44 h-9 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse"></div>
           ) : isAuthenticated ? (
             <>
               <Button asChild variant="ghost" size="sm">

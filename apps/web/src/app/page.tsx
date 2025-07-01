@@ -1,3 +1,5 @@
+// apps/web/src/app/page.tsx
+
 import { getClient } from "@/lib/client";
 import { gql } from "@apollo/client";
 import Link from "next/link";
@@ -34,7 +36,7 @@ const LIST_EVENTS_QUERY = gql`
 `;
 
 export default async function HomePage({ searchParams }: { searchParams: { page?: string } }) {
-  const page = parseInt(searchParams.page || '1', 10);
+  const page = parseInt(searchParams?.page || '1', 10);
   const limit = 6;
   const offset = (page - 1) * limit;
 
@@ -44,7 +46,7 @@ export default async function HomePage({ searchParams }: { searchParams: { page?
     const { data } = await getClient().query<ListEventsData>({
       query: LIST_EVENTS_QUERY,
       variables: { limit, offset },
-      context: { fetchOptions: { next: { revalidate: 10 } } },
+      context: { fetchOptions: { next: { revalidate: 0 } } },
     });
     if (data?.listEvents) {
       events = data.listEvents.events;
