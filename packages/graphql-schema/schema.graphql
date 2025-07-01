@@ -1,0 +1,75 @@
+# packages/graphql-schema/schema.graphql
+
+# Tipos Principais que espelham nossas coleções no MongoDB
+type User {
+	id: ID!
+	name: String!
+	email: String!
+	role: Role!
+}
+
+scalar DateTime
+
+type Event {
+	id: ID!
+	title: String!
+	description: String!
+	date: DateTime!
+	location: String!
+	price: Float!
+	organizer: User!
+}
+
+
+type EventsPage {
+	events: [Event!]!
+	totalCount: Int!
+}
+
+type Registration {
+	id: ID!
+	event: Event!
+	participant: User!
+	status: RegistrationStatus!
+	createdAt: String!
+}
+
+# Tipos de Enumeração
+enum Role {
+	PARTICIPANT
+	ORGANIZER
+}
+
+enum RegistrationStatus {
+	PENDING
+	CONFIRMED
+	CANCELLED
+}
+
+# Queries (Leitura de Dados)
+type Query {
+	listEvents(limit: Int, offset: Int): EventsPage!
+	getEvent(id: ID!): Event
+	getAttendeesForMyEvent(eventId: ID!): [Registration!]!
+	getMyRegistrations: [Registration!]!
+}
+
+# Mutations (Escrita de Dados)
+type Mutation {
+	signup(name: String!, email: String!, password: String!): AuthPayload!
+	login(email: String!, password: String!): AuthPayload!
+	createEvent(
+		title: String!
+		description: String!
+		date: String!
+		location: String!
+		price: Float!
+	): Event!
+	registerForEvent(eventId: ID!): Registration!
+}
+
+# Tipo de Retorno para Autenticação
+type AuthPayload {
+	token: String!
+	user: User!
+}
