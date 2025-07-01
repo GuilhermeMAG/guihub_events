@@ -1,0 +1,15 @@
+// apps/api/tsconfig.json
+{
+  "compilerOptions": {
+    "rootDir": "src", // Onde nosso código .ts de origem vive
+    "outDir": "dist", // Onde o código .js compilado será salvo
+    "lib": [
+      "es2020"
+    ],
+    "target": "es2020",
+    "module": "commonjs", // Formato de módulo padrão para Node.js
+    "moduleResolution": "node",
+    "esModuleInterop": true, // Permite melhor interoperabilidade entre módulos
+    "strict": true // Habilita todas as checagens estritas de tipo
+  }
+}
