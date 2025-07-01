@@ -1,6 +1,9 @@
 // apps/web/src/app/layout.tsx
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+
+// ADIÇÃO CRÍTICA: Importa o CSS global que conecta o Tailwind
 import "./globals.css";
 
 // Nossos providers
@@ -25,7 +28,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" suppressHydrationWarning>
-      <body className={`${inter.className} antialiased`}>
+      {/* MUDANÇA 1: As classes de cor de fundo e texto base são aplicadas diretamente no <body>.
+        Isso garante que TODA a página visível tenha a cor de tema correta.
+      */}
+      <body className={`${inter.className} antialiased bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100`}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -34,10 +40,19 @@ export default function RootLayout({
         >
           <ApolloWrapper>
             <AuthProvider>
-              <Navbar />
-              <main className="bg-gray-50 dark:bg-gray-900 transition-colors duration-200">
-                {children}
-              </main>
+              {/* MUDANÇA 2: Usamos um layout flexbox vertical que ocupa no mínimo a altura total da tela.
+                Isso resolve o problema de páginas curtas e prepara o terreno para um rodapé fixo no futuro.
+              */}
+              <div className="flex flex-col min-h-screen">
+                <Navbar />
+                {/* MUDANÇA 3: A tag <main> agora é um container flexível que cresce para ocupar o espaço disponível.
+                  Ela não precisa mais de classes de cor de fundo.
+                */}
+                <main className="flex-grow">
+                  {children}
+                </main>
+                {/* Um <Footer /> poderia ser adicionado aqui no futuro e ficaria corretamente no final da página */}
+              </div>
             </AuthProvider>
           </ApolloWrapper>
         </ThemeProvider>

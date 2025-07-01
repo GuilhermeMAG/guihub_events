@@ -1,11 +1,12 @@
-// apps/web/src/app/page.tsx
-
 import { getClient } from "@/lib/client";
 import { gql } from "@apollo/client";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+
+// Garante que a página seja sempre dinâmica, o que é o correto para paginação.
+export const dynamic = 'force-dynamic';
 
 type EventSummary = {
   id: string;

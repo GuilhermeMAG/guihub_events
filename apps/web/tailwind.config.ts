@@ -2,9 +2,8 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
-	// MUDANÇA CRÍTICA: Usamos um array para forçar a estratégia de classe.
-	// Isso resolve a incompatibilidade que faz o Tailwind ignorar a configuração.
-	darkMode: ["class", '[data-theme="dark"]'],
+	// CORREÇÃO: Voltamos para a configuração padrão e mais robusta para next-themes.
+	darkMode: "class",
 
 	content: [
 		"./src/pages/**/*.{js,ts,jsx,tsx,mdx}",

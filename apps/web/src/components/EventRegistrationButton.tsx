@@ -18,14 +18,13 @@ const REGISTER_FOR_EVENT_MUTATION = gql`
 export default function EventRegistrationButton({ eventId }: { eventId: string }) {
   const { isAuthenticated, isLoading } = useAuth();
   const router = useRouter();
-  const [isRegistered, setIsRegistered] = useState(false); // Simples estado para feedback
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const [register, { loading: mutationLoading, error }] = useMutation(REGISTER_FOR_EVENT_MUTATION, {
     onCompleted: () => {
       setIsRegistered(true);
     },
     onError: (err) => {
-      // Se o erro for "já inscrito", atualiza a UI para refletir isso
       if (err.message.includes("Você já está inscrito")) {
         setIsRegistered(true);
       }

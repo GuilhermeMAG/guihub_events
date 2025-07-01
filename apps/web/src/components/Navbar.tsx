@@ -1,4 +1,3 @@
-// apps/web/src/components/Navbar.tsx
 'use client';
 
 import Link from 'next/link';
@@ -7,7 +6,6 @@ import { Button } from './ui/button';
 import { ThemeSwitcher } from './theme-switcher';
 
 export default function Navbar() {
-  // A Navbar agora apenas consome o contexto, sem estados ou efeitos próprios.
   const { isAuthenticated, logout, isLoading } = useAuth();
 
   return (
@@ -18,7 +16,6 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center space-x-2">
           <ThemeSwitcher />
-          {/* Usamos um placeholder para evitar "layout shift" enquanto a autenticação carrega */}
           {isLoading ? (
             <div className="w-44 h-9 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse"></div>
           ) : isAuthenticated ? (

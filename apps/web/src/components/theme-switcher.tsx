@@ -1,4 +1,3 @@
-// apps/web/src/components/theme-switcher.tsx
 'use client';
 
 import * as React from 'react';
@@ -10,13 +9,10 @@ export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
 
-  // useEffect só roda no cliente, então usamos isso para garantir que não haja
-  // erro de hidratação ao tentar renderizar um ícone diferente no servidor e no cliente.
   React.useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Se o componente ainda não montou, renderiza um placeholder para evitar layout shift.
   if (!mounted) {
     return <div className="w-10 h-10" />;
   }
