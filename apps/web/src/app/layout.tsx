@@ -5,6 +5,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { ApolloWrapper } from "@/lib/apollo-provider";
 import { AuthProvider } from '@/context/AuthContext';
+import { ThemeProvider } from "@/components/theme-provider"
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,12 +22,21 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <ApolloWrapper>
-          <AuthProvider>
-            <Navbar />
-            <main>{children}</main>
-          </AuthProvider>
-        </ApolloWrapper>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ApolloWrapper>
+            <AuthProvider>
+              <Navbar />
+              <main className="bg-gray-50 dark:bg-gray-900 transition-colors duration-300">
+                {children}
+              </main>
+            </AuthProvider>
+          </ApolloWrapper>
+        </ThemeProvider>
       </body>
     </html>
   );
