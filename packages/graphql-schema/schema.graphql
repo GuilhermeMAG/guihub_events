@@ -61,7 +61,7 @@ type Mutation {
 	createEvent(
 		title: String!
 		description: String!
-		date: String!
+		date: DateTime!,
 		location: String!
 		price: Float!
 	): Event!

@@ -1,12 +1,13 @@
+// apps/web/src/app/create-event/page.tsx
 'use client';
 
 import { useEffect } from 'react';
+import { useMutation, gql } from '@apollo/client';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/context/AuthContext';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useMutation, gql } from '@apollo/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -16,6 +17,7 @@ const CREATE_EVENT_MUTATION = gql`
   mutation CreateEvent($title: String!, $description: String!, $date: DateTime!, $location: String!, $price: Float!) {
     createEvent(title: $title, description: $description, date: $date, location: $location, price: $price) {
       id
+      title
     }
   }
 `;
@@ -60,9 +62,20 @@ export default function CreateEventPage() {
     }
   });
 
+  // CORREÇÃO FINAL: Ajuste na submissão do formulário
   const onSubmit = (data: CreateEventFormValues) => {
-    // O input datetime-local retorna uma string que o scalar DateTime entende
-    createEvent({ variables: { ...data } });
+    // 1. Pega a string de data local do formulário (ex: "2025-07-01T14:31")
+    // 2. Cria um objeto Date, que o navegador interpreta no fuso horário local.
+    // 3. Converte para uma string ISO 8601 completa em UTC (ex: "2025-07-01T17:31:00.000Z")
+    const dateInUTC = new Date(data.date).toISOString();
+
+    // 4. Envia a data no formato correto para a API
+    createEvent({
+      variables: {
+        ...data,
+        date: dateInUTC,
+      },
+    });
   };
 
   if (isLoading) {
@@ -81,13 +94,11 @@ export default function CreateEventPage() {
             <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-50">Criar Novo Evento</h1>
             <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">Preencha os detalhes abaixo para divulgar seu evento na plataforma.</p>
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="title">Título do Evento</Label>
             <Input id="title" type="text" placeholder="Ex: Workshop de TypeScript Avançado" {...register('title')} />
             {errors.title && <p className="text-red-500 text-sm mt-1">{errors.title.message}</p>}
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="description">Descrição</Label>
             <Textarea
@@ -97,12 +108,11 @@ export default function CreateEventPage() {
             />
             {errors.description && <p className="text-red-500 text-sm mt-1">{errors.description.message}</p>}
           </div>
-
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-2">
               <Label htmlFor="date">Data e Hora</Label>
               <Input id="date" type="datetime-local" {...register('date')} />
-              {errors.date && <p className="text-red-600 text-sm mt-1">{errors.date.message}</p>}
+              {errors.date && <p className="text-red-500 text-sm mt-1">{errors.date.message}</p>}
             </div>
             <div className="space-y-2">
               <Label htmlFor="price">Preço (R$)</Label>
@@ -110,15 +120,12 @@ export default function CreateEventPage() {
               {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price.message}</p>}
             </div>
           </div>
-
           <div className="space-y-2">
             <Label htmlFor="location">Localização</Label>
             <Input id="location" type="text" placeholder="Ex: Online (via Zoom) ou Endereço Completo" {...register('location')} />
-            {errors.location && <p className="text-red-600 text-sm mt-1">{errors.location.message}</p>}
+            {errors.location && <p className="text-red-500 text-sm mt-1">{errors.location.message}</p>}
           </div>
-
           {apiError && <p className="text-red-500 text-sm text-center py-2">{apiError.message}</p>}
-
           <div className="pt-6 border-t border-gray-200 dark:border-gray-800 flex justify-end">
             <Button type="submit" disabled={mutationLoading} className="w-full sm:w-auto">
               {mutationLoading ? 'Publicando...' : 'Publicar Evento'}

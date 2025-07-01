@@ -1,5 +1,3 @@
-// apps/web/src/app/events/[id]/page.tsx
-
 import { getClient } from "@/lib/client";
 import { gql } from "@apollo/client";
 import { Calendar, MapPin, User, DollarSign, ArrowLeft } from "lucide-react";
@@ -8,6 +6,8 @@ import { notFound } from "next/navigation";
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import EventRegistrationButton from "@/components/EventRegistrationButton";
+
+export const dynamic = 'force-dynamic';
 
 type Event = {
   id: string;
@@ -38,7 +38,7 @@ const GET_EVENT_QUERY = gql`
 `;
 
 function formatEventDate(dateString: string) {
-  return format(new Date(dateString), "EEEE, dd 'de' MMMM 'de' ইন্ডিয়ার, 'às' HH:mm'h'", { locale: ptBR });
+  return format(new Date(dateString), "EEEE, dd 'de' MMMM 'de' yyyy, 'às' HH:mm'h'", { locale: ptBR });
 }
 
 function formatPrice(price: number) {
