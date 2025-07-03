@@ -3,42 +3,36 @@
 import Link from 'next/link';
 import { useAuth } from '@/context/AuthContext';
 import { Button } from './ui/button';
+import { ThemeSwitcher } from './theme-switcher';
 
 export default function Navbar() {
   const { isAuthenticated, logout, isLoading } = useAuth();
 
-  // Renderiza um placeholder ou um skeleton enquanto o estado de autenticação carrega
-  // Isso evita o "flash" de conteúdo incorreto.
-  if (isLoading) {
-    return (
-      <header className="bg-white shadow-md">
-        <div className="container mx-auto px-6 py-3 h-[68px]"></div>
-      </header>
-    );
-  }
-
   return (
-    <header className="bg-white shadow-md sticky top-0 z-50">
-      <nav className="container mx-auto px-6 py-3 flex justify-between items-center">
-        <Link href="/" className="text-2xl font-bold text-gray-800 hover:text-blue-600 transition-colors">
+    <header className="bg-white/80 dark:bg-gray-950/80 shadow-sm sticky top-0 z-50 backdrop-blur-lg transition-colors duration-200">
+      <nav className="container mx-auto px-4 sm:px-6 py-3 flex justify-between items-center">
+        <Link href="/" className="text-2xl font-bold text-gray-900 dark:text-gray-50 hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
           EventPlatform
         </Link>
-        <div className="flex items-center space-x-4">
-          {isAuthenticated ? (
+        <div className="flex items-center space-x-2">
+          <ThemeSwitcher />
+          {isLoading ? (
+            <div className="w-44 h-9 bg-gray-200 dark:bg-gray-800 rounded-md animate-pulse"></div>
+          ) : isAuthenticated ? (
             <>
-              <Button asChild variant="ghost" className="mt-1 text-sm text-gray-600">
+              <Button asChild variant="ghost" size="sm">
                 <Link href="/create-event">Criar Evento</Link>
               </Button>
-              <Button onClick={logout} variant="destructive">
+              <Button onClick={logout} variant="destructive" size="sm">
                 Logout
               </Button>
             </>
           ) : (
             <>
-              <Button asChild variant="ghost">
+              <Button asChild variant="ghost" size="sm">
                 <Link href="/login">Login</Link>
               </Button>
-              <Button asChild>
+              <Button asChild size="sm">
                 <Link href="/signup">Cadastre-se</Link>
               </Button>
             </>

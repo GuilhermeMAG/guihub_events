@@ -53,28 +53,28 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50">
-      <div className="p-8 bg-white rounded-lg shadow-xl w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-900">Bem-vindo de Volta!</h2>
+    <div className="flex items-center justify-center min-h-screen px-4">
+      <div className="p-8 bg-white dark:bg-gray-950 rounded-lg border border-gray-200 dark:border-gray-800 shadow-xl w-full max-w-md">
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-900 dark:text-gray-50">Bem-vindo de Volta!</h2>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
           <div className="space-y-2">
             <Label htmlFor="email">Email</Label>
             <Input id="email" type="email" placeholder="seu.email@exemplo.com" {...register('email')} />
-            {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
+            {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
           </div>
           <div className="space-y-2">
             <Label htmlFor="password">Senha</Label>
             <Input id="password" type="password" placeholder="••••••••" {...register('password')} />
-            {errors.password && <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>}
+            {errors.password && <p className="text-red-500 text-sm mt-1">{errors.password.message}</p>}
           </div>
-          {apiError && <p className="text-red-600 text-sm text-center">{apiError.message}</p>}
+          {apiError && <p className="text-red-500 text-sm text-center">{apiError.message}</p>}
           <Button type="submit" disabled={loading} className="w-full">
             {loading ? 'Entrando...' : 'Entrar'}
           </Button>
         </form>
-        <p className="text-center text-sm text-gray-600 mt-6">
+        <p className="text-center text-sm text-gray-600 dark:text-gray-400 mt-6">
           Não tem uma conta?{' '}
-          <Link href="/signup" className="font-medium text-blue-600 hover:underline">
+          <Link href="/signup" className="font-medium text-blue-600 hover:underline dark:text-blue-400">
             Crie uma agora
           </Link>
         </p>
