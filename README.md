@@ -2,14 +2,7 @@
 
 Uma aplicação web full-stack moderna e robusta para criação, divulgação e gerenciamento de eventos. Desenvolvida do zero com as tecnologias mais atuais do ecossistema JavaScript, demonstrando uma arquitetura escalável e boas práticas de desenvolvimento.
 
-**[➡️ Acesse a Demo Ao Vivo](https://link-para-seu-deploy-na-vercel.com)** (Você substituirá este link após o deploy)
-
----
-
-### Prévia da Aplicação
-
-![Prévia do EventPlatform em Ação](https://i.imgur.com/92027e.png)
-*(Substitua pela sua própria imagem ou GIF da aplicação funcionando)*
+**[➡️ Acesse a Demo Ao Vivo](https://guihub-events-web-chi.vercel.app/)** 
 
 ---
 
