@@ -17,7 +17,7 @@ import Navbar from "@/components/Navbar";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "EventPlatform | Encontre Eventos Incríveis",
+  title: "Guihub EventPlatform | Encontre Eventos Incríveis",
   description: "Conecte-se, aprenda e cresça. Encontre os melhores workshops, meetups e conferências.",
 };
 
